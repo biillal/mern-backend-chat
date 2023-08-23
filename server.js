@@ -2,13 +2,17 @@ const express = require('express')
 const app = express()
 const dotenv = require('dotenv')
 dotenv.config()
-
+const cors = require('cors')
 //database connect
 const database = require('./database/database')
+database()
 const apiError = require('./utilis/apiError')
 const globalError = require('./middleware/errorMiddleware')
-database()
 
+
+app.use(cors({
+    origin:"http://localhost:3000"
+}))
 app.use(express.json())
 //middleware router
 app.use('/api/v1/auth',require('./routes/authRouter'));
