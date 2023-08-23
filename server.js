@@ -26,4 +26,4 @@ app.use('*',(req,res,next)=>{
 
 app.use(globalError)
 const PORT = process.env.PORT
-  
+app.listen(PORT, () => console.log(`server raning with port ${PORT}`))

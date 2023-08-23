@@ -18,7 +18,7 @@ module.exports.signup = asyncHandler(async (req, res, next) => {
     const user = await User.create({
         username: username,
         email: email,
-        password: password,
+        password: password, 
         phone:phone,
         role: req.body.role,
     })
