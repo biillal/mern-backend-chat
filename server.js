@@ -11,7 +11,7 @@ const globalError = require('./middleware/errorMiddleware')
 
 
 app.use(cors({
-    origin:"http://127.0.0.1:5173"
+    origin:"https://frontened-chat-mern.vercel.app/"
 }))
 app.use(express.json())
 //middleware router
