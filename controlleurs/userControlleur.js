@@ -12,7 +12,7 @@ module.exports.getAllUsers = asyncHandler(async (req, res, next) => {
 })
 
 module.exports.getSingleUser = asyncHandler(async (req, res, next) => {
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.params.id).pretty()
     if (!user) {
         return next(new apiError(`no user for this id ${id}`, 401))
     }
