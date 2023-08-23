@@ -13,18 +13,15 @@ const createToken = (id, role) => {
 }
 
 module.exports.signup = asyncHandler(async (req, res, next) => {
-
-    if (!req.file) {
-        next(new apiError('file is required', 400))
-    }
+    const {username,email,password,phone} = {...req.body}
     const imageProfile = path.join(__dirname, `../images/${req.file.filename}`)
 
     const user = await User.create({
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
+        username: username,
+        email: email,
+        password: password,
         image: imageProfile,
-        phone:req.body.phone,
+        phone:phone,
         role: req.body.role,
     })
     res.status(200).json({message:'Registed succesfully' , user })

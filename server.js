@@ -5,9 +5,10 @@ dotenv.config()
 const cors = require('cors')
 //database connect
 const database = require('./database/database')
-database()
+
 const apiError = require('./utilis/apiError')
 const globalError = require('./middleware/errorMiddleware')
+database()
 app.use(express.json())
 
 app.use(cors({
@@ -25,4 +26,4 @@ app.use('*',(req,res,next)=>{
 
 app.use(globalError)
 const PORT = process.env.PORT
-app.listen(PORT, () => console.log(`server raning with port ${PORT}`))
+  
