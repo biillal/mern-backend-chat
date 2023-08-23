@@ -8,12 +8,12 @@ const database = require('./database/database')
 database()
 const apiError = require('./utilis/apiError')
 const globalError = require('./middleware/errorMiddleware')
-
+app.use(express.json())
 
 app.use(cors({
     origin:"*"
 }))
-app.use(express.json())
+
 //middleware router
 app.use('/api/v1/auth',require('./routes/authRouter'));
 app.use('/api/v1/users',require('./routes/userRouter'));
