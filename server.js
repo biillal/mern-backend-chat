@@ -11,7 +11,7 @@ const globalError = require('./middleware/errorMiddleware')
 
 
 app.use(cors({
-    origin:"http://localhost:3000"
+    origin:"*"
 }))
 app.use(express.json())
 //middleware router
