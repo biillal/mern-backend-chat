@@ -24,7 +24,8 @@ module.exports.signup = asyncHandler(async (req, res, next) => {
         phone:phone,
         role: req.body.role,
     })
-    res.status(200).json({message:'Registed succesfully' , user })
+    const token = createToken(user._id, user.role)
+    res.status(200).json({message:'Registed succesfully' , user ,token})
 })
 
 
