@@ -14,11 +14,13 @@ const createToken = (id, role) => {
 
 module.exports.signup = asyncHandler(async (req, res, next) => {
     const {username,email,password,phone} = {...req.body}
+    const imageProfile = path.join(__dirname, `../images/${req.file.filename}`)
 
     const user = await User.create({
         username: username,
         email: email,
-        password: password, 
+        password: password,
+        image: imageProfile,
         phone:phone,
         role: req.body.role,
     })
