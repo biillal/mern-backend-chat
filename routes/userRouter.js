@@ -1,14 +1,16 @@
-const { getAllUsers, getSingleUser, deleteUser, updateUser } = require('../controlleurs/userControlleur')
+const { getAllUsers, getSingleUser, deleteUser, updateUser, searchusers } = require('../controlleurs/userControlleur')
 const { protect, verifyTokenAndAdmin, verifyTokenAdminAndUser, verifyTokenAndOnlyUser } = require('../middleware/jwtMiddleware')
 
 const router = require('express').Router()
 
 
 router.route('/')
-          .get(verifyTokenAndAdmin,getAllUsers)
+          .get(getAllUsers)
+        
+router.route('/search').get(searchusers)
 
 router.route('/:id')
-          .get(getSingleUser)
+          .get(verifyTokenAdminAndUser,getSingleUser)
           .delete(verifyTokenAdminAndUser,deleteUser)
           .put(verifyTokenAndOnlyUser,updateUser)
 

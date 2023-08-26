@@ -18,6 +18,7 @@ app.use(cors({
 //middleware router
 app.use('/api/v1/auth',require('./routes/authRouter'));
 app.use('/api/v1/users',require('./routes/userRouter'));
+app.use('/api/v1/chats',require('./routes/chatRouter'));
 
 
 app.use('*',(req,res,next)=>{

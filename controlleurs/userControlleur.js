@@ -48,3 +48,17 @@ module.exports.updateUser = asyncHandler(async (req, res, next) => {
     }
     res.status(201).json(user)
 })
+
+module.exports.searchusers = asyncHandler(async(req,res,next)=>{
+    const keyword = req.query.search ? {
+        $or:[
+            {username:{$regex:req.query.search ,$options:"i"}},
+            {email:{$regex:req.query.search ,$options:"i"}},
+        ]
+    } 
+    : {}
+    console.log(keyword);
+    const users = await User.find(keyword).find({_id:{$ne:req.user._id}})
+    console.log(users,' ggg');
+    res.status(201).json(users)
+})
