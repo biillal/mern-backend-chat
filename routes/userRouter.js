@@ -11,7 +11,7 @@ router.route('/')
 router.route('/search').get(verifyToken,searchusers)
 
 router.route('/:id')
-    .get(verifyTokenAdminAndUser, getSingleUser)
+    .get(getSingleUser)
     .delete(verifyTokenAdminAndUser, deleteUser)
     .put(verifyTokenAndOnlyUser, updateUser)
 router.route('/profile/profile-photo-upload')

@@ -14,17 +14,12 @@ const path = require('path')
 })
 
 module.exports.getSingleUser = asyncHandler(async (req, res, next) => {
-    const user = await User.findById(req.params.id).pretty()
+    const user = await User.findById(req.params.id)
     if (!user) {
         return next(new apiError(`no user for this id ${id}`, 401))
     }
-    let stJson = JSON.stringify(user)
-    qr.toString(stJson,{type:"terminal"},function(err,code){
-        if(err) return next(new apiError(err, 401));
-        console.log(code);
-        res.status(201).json({user,code})
-    })
-    
+    res.status(201).json(user)
+
 })
 module.exports.deleteUser = asyncHandler(async (req, res, next) => {
     const user = await User.findByIdAndDelete(req.params.id)
