@@ -2,8 +2,10 @@ const asyncHandler = require('express-async-handler')
 const { User } = require('../models/user')
 const apiError = require('../utilis/apiError')
 const qr = require('qrcode')
-
-module.exports.getAllUsers = asyncHandler(async (req, res, next) => {
+const { cloudinarayRemoveImage, cloudinarayUploadImage } = require('../utilis/cloudinary')
+const fs = require('fs')
+const path = require('path')
+ module.exports.getAllUsers = asyncHandler(async (req, res, next) => {
     const page = req.query.page
     const limit = req.query.limit
     const skip = (page - 1) * limit
@@ -61,4 +63,41 @@ module.exports.searchusers = asyncHandler(async(req,res,next)=>{
     const users = await User.find(keyword).find({_id:{$ne:req.user._id}})
     console.log(users,' ggg');
     res.status(201).json(users)
+})
+
+
+module.exports.profilePhotoUploadCntr = asyncHandler(async (req, res) => {
+    //1-validation
+    if (!req.file) {
+        res.status(400).json({ message: "no file provided" })
+    }
+    console.log(req.file);
+    // 2. get the path to the image
+    const imagePath = path.join(__dirname, `../images/${req.file.filename}`)
+
+    // 3. upload to cloudinaray
+    const result = await cloudinarayUploadImage(imagePath)
+
+    // 4. get the user from DB
+    const user = await User.findById(req.user.id)
+
+
+    // 5. delete the old profile photo if exist
+    if (user.image.publicId !== null) {
+        await cloudinarayRemoveImage(user.image.publicId)
+    }
+    // 6. change the profilephoto field in the DB 
+    user.image = {
+        url: result.secure_url,
+        publucId: result.public_id
+    }
+    await user.save()
+
+    // 7.send response to client
+    res.status(200).json({
+        message: "your profile photo uploaded successfully",
+        image: { url: result.secure_url, publicId: result.public_id }
+    })
+    //8.Remove image from the server
+    fs.unlinkSync(imagePath)
 })
