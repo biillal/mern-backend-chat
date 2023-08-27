@@ -8,7 +8,7 @@ const router = require('express').Router()
 router.route('/')
     .get(getAllUsers)
 
-router.route('/search').get(searchusers)
+router.route('/search').get(verifyToken,searchusers)
 
 router.route('/:id')
     .get(verifyTokenAdminAndUser, getSingleUser)

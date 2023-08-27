@@ -59,9 +59,7 @@ module.exports.searchusers = asyncHandler(async(req,res,next)=>{
         ]
     } 
     : {}
-    console.log(keyword);
-    const users = await User.find(keyword).find({_id:{$ne:req.user._id}})
-    console.log(users,' ggg');
+    const users = await User.find(keyword).find({_id:{$ne:req.user.id}})
     res.status(201).json(users)
 })
 
