@@ -67,12 +67,13 @@ module.exports.profilePhotoUploadCntr = asyncHandler(async (req, res) => {
     console.log(req.file);
     // 2. get the path to the image
     const imagePath = path.join(__dirname, `../images/${req.file.filename}`)
-
+    console.log(imagePath);
     // 3. upload to cloudinaray
     const result = await cloudinarayUploadImage(imagePath)
-
+    console.log(result);
     // 4. get the user from DB
     const user = await User.findById(req.user.id)
+    console.log(user);
 
 
     // 5. delete the old profile photo if exist
