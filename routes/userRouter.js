@@ -14,6 +14,6 @@ router.route('/:id')
     .get(getSingleUser)
     .delete(verifyTokenAdminAndUser, deleteUser)
     .put(verifyTokenAndOnlyUser, updateUser)
-router.route('/profile/profile-photo-upload')
+router.route('/profile-photo-upload')
     .post(verifyToken, upload.single("image"), profilePhotoUploadCntr)
 module.exports = router
